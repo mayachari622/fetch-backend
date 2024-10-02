@@ -1,0 +1,85 @@
+1. Why did you choose the tools, libraries, and language you used for the coding exercise?
+
+    1. I chose to use javascript with Node.js and Express because I have previous experience working with 
+    this stack for backend developement. This allowed me to set up my environment quickly and efficiently. 
+    I also know that JavaScript's asynchronous capabilities make it a good choice for backend development
+    because it can handle multiple requests simultaneously.
+
+    2. I chose to use a combination of a MinHeap and two HasMmaps to store and retrieve the user's information. 
+    I wanted to optimize information retrival in the 3 methods to be as quick as possible. I knew that I would need a 
+    quick way to order transactions by timestamp because of the "spend" method, so I chose to use a MinHeap to 
+    store timestamps. Using a MinHeap would allow me to keep track of transactions in ascending order based on 
+    timestamp, which ensures that points are spent in the correct order without needing to traverse the entire 
+    transaction history. The HashMaps allowed for efficient lookups and updates to the information. One HashMap
+    stores the transaction information with timestamps as the key (which in theory should be unique). The other
+    HashMap stores the cumulative points per payer. This separation allows the solution to be time-efficient in 
+    retrieving information both for balance checking and for processing the "spend" operation.
+    
+
+2. What are the advantages and disadvantages of your solution?
+
+    Advantages: 
+        1. Time Efficiency: The combination of MinHeap and HashMaps makes the solution very efficient in terms of 
+        time complexity. The MinHeap allows for O(log n) complexity for retrieving the oldest transaction, 
+        and the HashMaps allow for O(1) complexity for looking up or updating payers' balances.
+        
+        2. Modularity: Separating the transaction data and payer points into two HashMaps made my code organized and clear.
+        It also made it simple to maintain and update different parts of the user's data.
+
+    Disadvantages:
+        1. Handling Negative Points: I allowed for negative values of points to be added in the add function because 
+        in the writeup there was an "add" example with negative points. However, I don't actually think this should be allowed 
+        because it could cause confusion with the "spend" function. To try to maintain the integrity/sensibility of the system
+        I added a check in the "add" method so that negative points could only be added if it wouldn't make the total points 
+        balance of the payer negative. But in general, I don't think it is good practice to allow negative points to be added. 
+
+        2. Unique Timestamps: In the transaction hashmap, I used timestamp as the key of the hashmap. I figured 
+        timestamps would be unique since in this case, we were only dealing with one user. However, if this application were 
+        to scale up to handle many users, using timestamps as a key could be very buggy (because multiple transactions can happen
+        at the same time).
+
+        3. Scaling: The use of in-memory data structures like HashMaps and MinHeap works for a single user. However, for a 
+        multi-user system, I would recommend transitioning to a relational database (like SQL). I would use a table in SQL where 
+        I could give every transaction a unique ID, so that I would not have to rely on timestamps as being a key in the transaction
+        HashMap. SQL also has efficient ways of ordering data based on timestamps, so I would use that instead of a min heap. 
+
+
+3. What has been a favorite school/personal project thus far? What about it that challenged you?
+
+    My favorite project so far has been the Insta-lite project I created for my "Scalable and Clould
+    Computing" class last semester. We were given no starter code, and just 3 weeks to create 
+    a scalable and working web app version of Instagram that supported features like:
+         - user registration
+         - user login
+         - profile updates
+         - friend relationships
+         - notifications
+         - chat DMs
+         - image and text post uploads
+         - profile updates
+         - feed iteration (likes and comments)
+         - feed ranking algorithm based on the users friends and followed hashtags
+         - kafka twitter and federated posts post integration
+
+    This proejct was my first experience with full stack development, and it was my first time planing and
+    creating a relational database schema capable of efficiently handling complex relationships between 
+    users, posts, hashtags, interactions, etc. At first, the project felt completely overwhelming, and I 
+    truly didn't beleive I was capable of building something like this, especially in a limited amout of time. 
+    However, the three weeks I spent working on this project turned out to be some of the most enjoyable and
+    fulfilling of all my time at Penn.
+    
+    I had so much fun on this project, not only working with my team but also just with the progamming itself. 
+    (Which is why this Fetch assessment has been one of the most enjoyable assessments I have taken as well!)
+    I was always so great to see how the frontend and backend of our project came together with each new feature that
+    we built. It was also so interesting to ideate with my patner aobut the schema of the tables we would need.
+    We would often start coding a feature, and then realize that in order to finish, we needed to go back and add
+    a column or two to some of our tables. But this is why this project was so great: it allowed us to witness our 
+    own growth in such a short period of time. By the end of the 3 weeks we were debugging in a fraction of the
+    time and would often think of edge cases before we started coding. 
+    
+    I’ve always been someone who loves understanding how things work, and this project gave me the opportunity to 
+    see the entire process from start to finish. t reminded me of when I learned assembly language in a previous 
+    class and experienced that same deep satisfaction of finally understanding the low-level mechanics of how 
+    computers operate. I am so grateful that I took this class and had the opportunity to build this project. It 
+    solidified my passion for building complex systems and helped me realize that hands-on implementation is key 
+    to truly mastering the concepts I had been learning throughout the semester.
