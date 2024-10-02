@@ -24,11 +24,17 @@ app.post('/add', async (req, res) => {
     const {payer, points, timestamp} = req.body;
 
     try {
+        // cannot have to transactions with the same timestamp
+        if (transactionMap.has(timestamp)) {
+            return res.status(400).send("Transaction with this timestamp already exists.");
+        }
+        
         // define data strcuture for the transactions map
         let value = {
             payer: payer,
             points: points
         };
+
         transactionMap.set(timestamp, value);
 
         // add to payer points map
